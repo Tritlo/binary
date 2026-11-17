@@ -1045,7 +1045,7 @@ getSomeTypeRep = do
         2 -> do SomeTypeRep f <- getSomeTypeRep
                 SomeTypeRep x <- getSomeTypeRep
                 case typeRepKind f of
-                  Fun arg res ->
+                  Fun' _ arg res ->
                       case arg `eqTypeRep` typeRepKind x of
                         Just HRefl -> do
                             case typeRepKind res `eqTypeRep` (typeRep :: TypeRep Type) of
