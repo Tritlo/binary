@@ -1018,7 +1018,11 @@ putTypeRep (Con' con ks) = do
     put (1 :: Word8)
     put con
     put ks
+#if __GLASGOW_HASKELL__ >= 1001
 putTypeRep (App' f x) = do
+#else
+putTypeRep (App f x) = do
+#endif
     put (2 :: Word8)
     putTypeRep f
     putTypeRep x
@@ -1045,7 +1049,11 @@ getSomeTypeRep = do
         2 -> do SomeTypeRep f <- getSomeTypeRep
                 SomeTypeRep x <- getSomeTypeRep
                 case typeRepKind f of
+#if __GLASGOW_HASKELL__ >= 1001
                   Fun' _ arg res ->
+#else
+                  Fun arg res ->
+#endif
                       case arg `eqTypeRep` typeRepKind x of
                         Just HRefl -> do
                             case typeRepKind res `eqTypeRep` (typeRep :: TypeRep Type) of
