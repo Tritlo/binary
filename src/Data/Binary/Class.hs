@@ -1018,7 +1018,7 @@ putTypeRep (Con' con ks) = do
     put (1 :: Word8)
     put con
     put ks
-putTypeRep (App f x) = do
+putTypeRep (App' f x) = do
     put (2 :: Word8)
     putTypeRep f
     putTypeRep x
